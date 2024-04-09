@@ -1,4 +1,4 @@
-#include "dict.h"
+#include "../include/dict.h"
 
 dict_t *new_dict(int max_size)
 {

@@ -3,12 +3,10 @@
 #include <string.h>
 #include <ctype.h>
 #include <math.h>
-#include "mystring.h"
-#include "dict.h"
+#include "./include/mystring.h"
+#include "./include/dict.h"
 
 #define MAXLEN 500
-
-
 
 char *receive_input()
 {
@@ -492,7 +490,7 @@ char *parse_expression(char *mystr)
 	mystr = add_all_exp(mystr, 0, strlen(mystr));
 
 	printf("\n%s\n", mystr);
-
+	
 	char *result = parse_sum(mystr, s);
 
 	int max_left_length = 0;

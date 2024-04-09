@@ -1,4 +1,4 @@
-#include "mystring.h"
+#include "../include/mystring.h"
 
 char *cut_string(char *str, int start, int end)
 {
