@@ -1,9 +1,17 @@
 <p align="center">
-  <img src="https://github.com/thiagobmi/mycalc/assets/118558122/194caeef-2c08-47fa-8c77-097ca1271164" alt="Sublime's custom image"/>
+  <img src="https://github.com/thiagobmi/CapinchoCalc/assets/118558122/8cd8a44b-f3c0-4582-874b-b46520ee9289" alt="Sublime's custom image" width="300" height="300" />
 </p>
 
-# CapinchoCalc
+<p align="center">
+<h1 align="center">CapinchoCalc</h1>
+    <p align="center">
+        <a href="#overview">Overview</a> &#183;
+        <a href="#features">Features</a> &#183;
+        <a href="#how-to-use">How to Use</a>
+    </p>
+</p>
 
+## Overview
 CapinchoCalc is a command-line calculator and math expression parser, inspired by GNU calc.
 
 Disclaimer: I did this as a challenge, so I didn't search anything on Google. Just wrote it from scratch trying to follow my own approach and intuition.
