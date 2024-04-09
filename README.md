@@ -9,8 +9,9 @@ CapinchoCalc is a command-line calculator and math expression parser, inspired b
 Disclaimer: I did this as a challenge, so I didn't search anything on Google. Just wrote it from scratch trying to follow my own approach and intuition.
 
 ## Features
+- Validates the input expression for correctness.
 - Adds brackets to expressions following precedence order for accurate parsing.
-- Parses and calculates mathematical expressions.
+- Parses and calculates mathematical expressions, supporting basic arithmetic operations: addition (+), subtraction (-), multiplication (*), division (/), and exponentiation (^).
 - Shows the result of each step during the calculation process.
 
 ## How to Use
