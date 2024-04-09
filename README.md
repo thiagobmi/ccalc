@@ -2,9 +2,9 @@
   <img src="https://github.com/thiagobmi/mycalc/assets/118558122/194caeef-2c08-47fa-8c77-097ca1271164" alt="Sublime's custom image"/>
 </p>
 
-# MyCalc
+# CapinchoCalc
 
-MyCalc is a command-line calculator and math expression parser, inspired by GNU calc.
+CapinchoCalc is a command-line calculator and math expression parser, inspired by GNU calc.
 
 Disclaimer: I did this as a challenge, so I didn't search anything on Google. Just wrote it from scratch trying to follow my own approach and intuition.
 
@@ -17,7 +17,7 @@ Disclaimer: I did this as a challenge, so I didn't search anything on Google. Ju
 
 You can directly pass the input as an argument to the program, like in the 'calc' command:
 ```bash
-mycalc "(((56-23)*2^2-7)/12.5+(10-4+(10/5*3+54+2^2)+1)+1-2)/2^2"
+ccalc "(((56-23)*2^2-7)/12.5+(10-4+(10/5*3+54+2^2)+1)+1-2)/2^2"
 ```
 
 
