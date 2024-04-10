@@ -1,7 +1,6 @@
 <p float="left">
   <p align="center">
-  <img src="https://github.com/thiagobmi/CapinchoCalc/assets/118558122/8cd8a44b-f3c0-4582-874b-b46520ee9289" width="126" />
-  <img src="https://github.com/thiagobmi/CapinchoCalc/assets/118558122/a809fc85-b275-4a95-b444-904a0911f598" width="680" /> 
+  <img src="https://github.com/thiagobmi/CapinchoCalc/assets/118558122/38ddc24d-848c-42fa-aff7-dafcd535837c" />
 </p>
 
 <p align="center">
