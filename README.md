@@ -12,6 +12,9 @@
 ## Overview
 Command-line math expression parser and calculator, inspired by GNU calc.
 
+## Disclaimer
+This project was made purely for fun and to learn some VIM commands. It was built using only an old computer, VIM, and without the use of any search engines or external resources. I just tried to follow my own approach and intuition. Don't take it too seriously.
+
 ## Features
 - Validates the input expression for correctness.
 - Adds brackets to expressions following precedence order for accurate parsing.
