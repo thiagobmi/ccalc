@@ -14,5 +14,6 @@ char *slice_str(char *str, int start, int end);
 char *concat_strings(int argc, char **argv);
 char *add_to_str(char *dest, char *src, int index);
 int valid_characters(char *str, char *valid);
+char *remove_all_whitespaces(char *str);
 
 #endif /* MYSTRING_H */

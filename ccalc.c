@@ -29,7 +29,6 @@ int find_bracket(char *str, int index)
 	}
 }
 
-
 int bracket_type(char *str, int start, int end)
 {
 	int count_open = -1;
@@ -236,7 +235,6 @@ char *treat_edge_case(char *str)
 
 char *add_brackets_inside(char *str)
 {
-
 	for (int i = 0; i < strlen(str); i++)
 	{
 		if (str[i] == '(')
@@ -484,33 +482,38 @@ char *parse_expression(char *mystr)
 {
 
 	shelf_t *s = new_shelf(1);
+	mystr = remove_all_whitespaces(mystr);
 	mystr = treat_edge_case(mystr);
 	mystr = add_brackets(mystr, 0, strlen(mystr), 1);
 	mystr = add_brackets_inside(mystr);
 	mystr = add_all_exp(mystr, 0, strlen(mystr));
 
 	printf("\n%s\n", mystr);
-	
+
 	char *result = parse_sum(mystr, s);
 
 	int max_left_length = 0;
-    for (int i = 0; i < s->len; i++) {
-        dict_t *ds = s->d[i];
-        int left_length = strlen(ds->words[0].letters);
-        if (left_length > max_left_length) {
-            max_left_length = left_length;
-        }
-    }
+	for (int i = 0; i < s->len; i++)
+	{
+		dict_t *ds = s->d[i];
+		int left_length = strlen(ds->words[0].letters);
+		if (left_length > max_left_length)
+		{
+			max_left_length = left_length;
+		}
+	}
 
-    for (int i = 0; i < s->len; i++) {
-        dict_t *ds = s->d[i];
-        printf("\nSolving: %s", ds->words[0].letters);
-        int space_count = max_left_length - strlen(ds->words[0].letters);
-        for (int j = 0; j < space_count; j++) {
-            printf(" ");
-        }
-        printf(" = %s", ds->words[1].letters);
-    }
+	for (int i = 0; i < s->len; i++)
+	{
+		dict_t *ds = s->d[i];
+		printf("\nSolving: %s", ds->words[0].letters);
+		int space_count = max_left_length - strlen(ds->words[0].letters);
+		for (int j = 0; j < space_count; j++)
+		{
+			printf(" ");
+		}
+		printf(" = %s", ds->words[1].letters);
+	}
 	return result;
 }
 
@@ -537,7 +540,7 @@ int valid_brackets(char *str)
 int validate_expression(char *str)
 {
 	char *valid = "()1234567890-+^*/. ";
-	if (!valid_characters(str,valid))
+	if (!valid_characters(str, valid))
 	{
 		return 1;
 	}
