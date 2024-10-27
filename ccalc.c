@@ -482,7 +482,6 @@ char *parse_expression(char *mystr)
 {
 
 	shelf_t *s = new_shelf(1);
-	mystr = remove_all_whitespaces(mystr);
 	mystr = treat_edge_case(mystr);
 	mystr = add_brackets(mystr, 0, strlen(mystr), 1);
 	mystr = add_brackets_inside(mystr);
@@ -546,10 +545,12 @@ int validate_expression(char *str)
 	}
 	if (!valid_brackets(str))
 	{
+		
 		return 1;
 	}
 	if (is_in_string(str, "()"))
 	{
+
 		return 1;
 	}
 	if (is_in_string(str, "//"))
@@ -575,11 +576,11 @@ int validate_expression(char *str)
 		return 1;
 	}
 
-	if (str[strlen(str) - 2] == '+' || str[strlen(str) - 2] == '-' || str[strlen(str) - 2] == '/' || str[strlen(str) - 2] == '*' || str[strlen(str) - 2] == '*')
+	if (str[strlen(str) - 1] == '+' || str[strlen(str) - 1] == '-' || str[strlen(str) - 1] == '/' || str[strlen(str) - 1] == '*' || str[strlen(str) - 1] == '*')
 	{
 		return 1;
 	}
-	if (str[0] == '+' || str[0] == '-' || str[0] == '/' || str[0] == '*' || str[0] == '*')
+	if (str[0] == '/' || str[0] == '*' || str[0] == '^')
 	{
 		return 1;
 	}
@@ -610,6 +611,15 @@ int validate_expression(char *str)
 	if (is_in_string(str, "(^"))
 		return 1;
 
+	if (is_in_string(str, "+/"))
+		return 1;
+
+	if (is_in_string(str, "+*"))
+		return 1;
+
+	if (is_in_string(str, "+^"))
+		return 1;
+
 	else
 		return 0;
 }
@@ -623,6 +633,8 @@ int main(int argc, char **argv)
 		mystr = concat_strings(argc, argv);
 	else
 		mystr = receive_input();
+
+	mystr = remove_all_whitespaces(mystr);
 
 	if (validate_expression(mystr) == 0)
 		printf("\n\n\t\t%s\n", parse_expression(mystr));
