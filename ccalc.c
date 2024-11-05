@@ -140,6 +140,31 @@ char *add_all_exp(char *str, int start, int end)
 	return str;
 }
 
+void print_result(char*str){
+
+	int index = strlen(str)-1;
+	
+	while(str[index] =='0')
+		index--;
+	
+	if(str[index]=='.')
+		index--;
+	
+	for(int i=0;i<=index;i++)
+		printf("%c",str[i]);
+}
+
+void display_result(char* str){
+
+	printf("\n\n\t");
+	
+	print_result(str);	
+
+	printf("\n\n");
+
+
+}
+
 char *add_brackets(char *str, int start, int end, int flag)
 {
 
@@ -322,7 +347,7 @@ char *parse_sum(char *mystring, shelf_t *s)
 		sum += numbers[i];
 	}
 
-	sprintf(result, "%lf", sum);
+	sprintf(result, "%.13lf", sum);
 
 	dict_t *ds = new_dict(2);
 	ds = add_word(ds, mystring);
@@ -402,7 +427,7 @@ char *parse_factor(char *mystring, shelf_t *s)
 		sum *= numbers[i];
 	}
 
-	sprintf(result, "%lf", sum);
+	sprintf(result, "%.13lf", sum);
 
 	dict_t *ds = new_dict(2);
 	ds = add_word(ds, mystring);
@@ -468,7 +493,7 @@ char *parse_exponential(char *mystring, shelf_t *s)
 			sum = numbers[i];
 	}
 
-	sprintf(result, "%lf", sum);
+	sprintf(result, "%.13lf", sum);
 
 	dict_t *ds = new_dict(2);
 	ds = add_word(ds, mystring);
@@ -511,7 +536,9 @@ char *parse_expression(char *mystr)
 		{
 			printf(" ");
 		}
-		printf(" = %s", ds->words[1].letters);
+		//double result = atof(ds->words[1].letters);
+		printf(" = ");
+		print_result(ds->words[1].letters);
 	}
 	return result;
 }
@@ -535,6 +562,10 @@ int valid_brackets(char *str)
 		return 0;
 	return 1;
 }
+
+
+
+
 
 int validate_expression(char *str)
 {
@@ -637,5 +668,7 @@ int main(int argc, char **argv)
 	mystr = remove_all_whitespaces(mystr);
 
 	if (validate_expression(mystr) == 0)
-		printf("\n\n\t\t%s\n", parse_expression(mystr));
+//		printf("\n\n\t\t%s\n", parse_expression(mystr));
+
+		display_result(parse_expression(mystr));
 }
