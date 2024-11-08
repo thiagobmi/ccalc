@@ -13,7 +13,7 @@
 Command-line math expression parser and calculator, inspired by GNU calc.
 
 ## Disclaimer
-This project was made purely for fun and to learn some VIM commands. It was built using only an old computer, VIM, and without the use of any search engines or external resources. I just tried to follow my own approach and intuition. **Don't take it too seriously.**
+This project was made purely for fun and in my free time. It's full of bad practices. I just tried to do it in my own way, without any previous knowledge on lexical analysis or mathematical expressions parsing. So **this code is not meant to be taken as a serious math expression parser**.
 
 ## Features
 - Validates the input expression for correctness.
