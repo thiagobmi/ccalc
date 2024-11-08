@@ -25,7 +25,9 @@ This project was made purely for fun and in my free time. It's full of bad pract
 
 You can directly pass the input as an argument to the program, like in the 'calc' command:
 ```bash
-ccalc "(((56-23)*2^2-7)/12.5+(10-4+(10/5*3+54+2^2)+1)+1-2)/2^2"
+ccalc "(((56-23)*2^2-7)/12.5+(10-4+(10/5*3+54+2^2)+1)+1-2)/2^2.5"
 ```
 
-![image](https://github.com/thiagobmi/mycalc/assets/118558122/0291b912-60be-4f2a-a2ad-80333f276b5c)
+![image](https://github.com/user-attachments/assets/b1afda64-bfd8-4c1c-b402-16500b543310)
+
+
