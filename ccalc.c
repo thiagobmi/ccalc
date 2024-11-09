@@ -238,7 +238,7 @@ char *treat_edge_case(char *str)
 	for (int i = 0; i < strlen(str) - 1; i++)
 	{
 		int a;
-		if ((str[i] == '/' || str[i] == '*') && (str[i + 1] == '-' || str[i + 1] == '+'))
+		if ((str[i] == '/' || str[i] == '*' || str[i] == '-') && (str[i + 1] == '-' || str[i + 1] == '+'))
 		{
 			if (str[i + 2] != '(')
 			{
@@ -616,10 +616,10 @@ int validate_expression(char *str)
 		return 1;
 	}
 
-	if (is_in_string(str, "--"))
-	{
-		return 1;
-	}
+//	if (is_in_string(str, "--"))
+//	{
+//		return 1;
+//	}
 
 	if (str[strlen(str) - 1] == '+' || str[strlen(str) - 1] == '-' || str[strlen(str) - 1] == '/' || str[strlen(str) - 1] == '*' || str[strlen(str) - 1] == '^')
 	{
