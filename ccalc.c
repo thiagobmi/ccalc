@@ -303,27 +303,29 @@ char *parse_sum(char *mystring, shelf_t *s)
 			}
 		}
 
-
-
 		if (mystring[i] == '(')
 		{
-
-			if (bracket_type(mystring, i, find_bracket(mystring, i + 1) - 1) == 1)
+			int start = i + 1;
+			int brk_type = bracket_type(mystring, i, find_bracket(mystring, start) - 1);
+			int end = find_bracket(mystring,start) - 1;
+ 
+			if (brk_type == 1)
 			{
-				strcat(buffer, parse_factor(cut_string(mystring, i + 1, find_bracket(mystring, i + 1) - 1), s));
+				strcat(buffer, parse_factor(cut_string(mystring, start, end), s));
 			}
-			else if (bracket_type(mystring, i, find_bracket(mystring, i + 1) - 1) == 2)
+			else if (brk_type == 2)
 			{
-				strcat(buffer, parse_sum(cut_string(mystring, i + 1, find_bracket(mystring, i + 1) - 1), s));
+				strcat(buffer, parse_sum(cut_string(mystring, start, end), s));
 			}
 			else
 			{
-				strcat(buffer, parse_exponential(cut_string(mystring, i + 1, find_bracket(mystring, i + 1) - 1), s));
+				strcat(buffer, parse_exponential(cut_string(mystring, start, end), s));
 			}
 
 			b_len = strlen(buffer);
-			i = find_bracket(mystring, i + 1) - 1;
+			i = end;
 		}
+
 		else if (mystring[i] == ' ')
 			continue;
 
@@ -380,7 +382,7 @@ char *parse_factor(char *mystring, shelf_t *s)
 	double sum = 1;
 	char *result = malloc(sizeof(char) * 50);
 
-	dict_t *d = new_dict(20);
+	dict_t *d = new_dict(10);
 	buffer[0] = '\0';
 
 	for (int i = 0; i < strlen(mystring) + 1; i++)
@@ -388,20 +390,25 @@ char *parse_factor(char *mystring, shelf_t *s)
 
 		if (mystring[i] == '(')
 		{
-			if (bracket_type(mystring, i, find_bracket(mystring, i + 1) - 1) == 1)
+			int start = i + 1;
+			int brk_type = bracket_type(mystring, i, find_bracket(mystring, start) - 1);
+			int end = find_bracket(mystring,start) - 1;
+ 
+			if (brk_type == 1)
 			{
-				strcat(buffer, parse_factor(cut_string(mystring, i + 1, find_bracket(mystring, i + 1) - 1), s));
+				strcat(buffer, parse_factor(cut_string(mystring, start, end), s));
 			}
-			else if (bracket_type(mystring, i, find_bracket(mystring, i + 1) - 1) == 2)
+			else if (brk_type == 2)
 			{
-				strcat(buffer, parse_sum(cut_string(mystring, i + 1, find_bracket(mystring, i + 1) - 1), s));
+				strcat(buffer, parse_sum(cut_string(mystring, start, end), s));
 			}
 			else
 			{
-				strcat(buffer, parse_exponential(cut_string(mystring, i + 1, find_bracket(mystring, i + 1) - 1), s));
+				strcat(buffer, parse_exponential(cut_string(mystring, start, end), s));
 			}
+
 			b_len = strlen(buffer);
-			i = find_bracket(mystring, i + 1) - 1;
+			i = end;
 		}
 		else if (mystring[i] == ' ')
 			continue;
@@ -460,7 +467,7 @@ char *parse_exponential(char *mystring, shelf_t *s)
 	double sum = 1;
 	char *result = malloc(sizeof(char) * 50);
 
-	dict_t *d = new_dict(20);
+	dict_t *d = new_dict(10);
 	buffer[0] = '\0';
 
 	for (int i = 0; i < strlen(mystring) + 1; i++)
@@ -468,21 +475,27 @@ char *parse_exponential(char *mystring, shelf_t *s)
 
 		if (mystring[i] == '(')
 		{
-			if (bracket_type(mystring, i, find_bracket(mystring, i + 1) - 1) == 1)
+			int start = i + 1;
+			int brk_type = bracket_type(mystring, i, find_bracket(mystring, start) - 1);
+			int end = find_bracket(mystring,start) - 1;
+ 
+			if (brk_type == 1)
 			{
-				strcat(buffer, parse_factor(cut_string(mystring, i + 1, find_bracket(mystring, i + 1) - 1), s));
+				strcat(buffer, parse_factor(cut_string(mystring, start, end), s));
 			}
-			else if (bracket_type(mystring, i, find_bracket(mystring, i + 1) - 1) == 2)
+			else if (brk_type == 2)
 			{
-				strcat(buffer, parse_sum(cut_string(mystring, i + 1, find_bracket(mystring, i + 1) - 1), s));
+				strcat(buffer, parse_sum(cut_string(mystring, start, end), s));
 			}
 			else
 			{
-				strcat(buffer, parse_exponential(cut_string(mystring, i + 1, find_bracket(mystring, i + 1) - 1), s));
+				strcat(buffer, parse_exponential(cut_string(mystring, start, end), s));
 			}
+
 			b_len = strlen(buffer);
-			i = find_bracket(mystring, i + 1) - 1;
+			i = end;
 		}
+
 		else if (mystring[i] == ' ')
 			continue;
 		else if (mystring[i] == '^' || mystring[i] == '\0')
@@ -550,7 +563,7 @@ char *parse_expression(char *mystr)
 		{
 			printf(" ");
 		}
-		//double result = atof(ds->words[1].letters);
+
 		printf(" = ");
 		print_result(ds->words[1].letters);
 	}
@@ -616,11 +629,6 @@ int validate_expression(char *str)
 		return 1;
 	}
 
-//	if (is_in_string(str, "--"))
-//	{
-//		return 1;
-//	}
-
 	if (str[strlen(str) - 1] == '+' || str[strlen(str) - 1] == '-' || str[strlen(str) - 1] == '/' || str[strlen(str) - 1] == '*' || str[strlen(str) - 1] == '^')
 	{
 		return 1;
@@ -682,7 +690,5 @@ int main(int argc, char **argv)
 	mystr = remove_all_whitespaces(mystr);
 
 	if (validate_expression(mystr) == 0)
-//		printf("\n\n\t\t%s\n", parse_expression(mystr));
-
 		display_result(parse_expression(mystr));
 }
