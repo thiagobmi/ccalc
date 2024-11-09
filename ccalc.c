@@ -297,6 +297,14 @@ char *parse_sum(char *mystring, shelf_t *s)
 	for (int i = 0; i < strlen(mystring) + 1; i++)
 	{
 
+		if(buffer[0]=='-' && buffer[1]=='-'){
+			for(int j=0;j<strlen(buffer)-2;j++){
+				buffer[j] = buffer[j+2];
+			}
+		}
+
+
+
 		if (mystring[i] == '(')
 		{
 
@@ -322,7 +330,10 @@ char *parse_sum(char *mystring, shelf_t *s)
 		else if (mystring[i] == '-')
 		{
 			buffer[b_len] = '\0';
-			add_word(d, buffer);
+
+			if(b_len>0)
+				add_word(d, buffer);
+
 			buffer[0] = '-';
 			buffer[1] = '\0';
 			b_len = 1;
@@ -330,7 +341,10 @@ char *parse_sum(char *mystring, shelf_t *s)
 		else if (mystring[i] == '+' || mystring[i] == '\0')
 		{
 			buffer[b_len] = '\0';
-			add_word(d, buffer);
+
+			if(b_len>0)
+				add_word(d, buffer);
+
 			b_len = 0;
 			buffer[0] = '\0';
 		}
