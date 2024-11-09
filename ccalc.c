@@ -227,7 +227,7 @@ int check_signs(char *str, int start, int end)
 int is_edge_case(char *str, int start, int end)
 {
 	for (int i = 0; i < strlen(str) - 1; i++)
-		if ((str[i] == '/' || str[i] == '*') && str[i + 1] == '-')
+		if ((str[i] == '/' || str[i] == '*') && (str[i + 1] == '-' || str[i+1] =='+'))
 			return 1;
 	return 0;
 }
@@ -238,7 +238,7 @@ char *treat_edge_case(char *str)
 	for (int i = 0; i < strlen(str) - 1; i++)
 	{
 		int a;
-		if (((str[i] == '/' || str[i] == '*') && str[i + 1] == '-'))
+		if ((str[i] == '/' || str[i] == '*') && (str[i + 1] == '-' || str[i + 1] == '+'))
 		{
 			if (str[i + 2] != '(')
 			{
