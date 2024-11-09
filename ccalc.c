@@ -607,7 +607,7 @@ int validate_expression(char *str)
 		return 1;
 	}
 
-	if (str[strlen(str) - 1] == '+' || str[strlen(str) - 1] == '-' || str[strlen(str) - 1] == '/' || str[strlen(str) - 1] == '*' || str[strlen(str) - 1] == '*')
+	if (str[strlen(str) - 1] == '+' || str[strlen(str) - 1] == '-' || str[strlen(str) - 1] == '/' || str[strlen(str) - 1] == '*' || str[strlen(str) - 1] == '^')
 	{
 		return 1;
 	}
