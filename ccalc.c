@@ -232,6 +232,25 @@ int is_edge_case(char *str, int start, int end)
 	return 0;
 }
 
+
+int find_next_number(char *str, int index)
+{
+	int count_open = 0;
+	for (int i = index; i < strlen(str); i++)
+	{
+		if (str[i] == '(')
+			count_open++;
+		else if (str[i] == ')')
+			count_open--;
+		if (count_open < 0)
+			return i;
+		if ((isdigit(str[i])) && count_open == 0)
+			return i;
+	}
+}
+
+
+
 char *treat_edge_case(char *str)
 {
 	int count_open = 0;
@@ -242,10 +261,12 @@ char *treat_edge_case(char *str)
 		{
 			if (str[i + 2] != '(')
 			{
-				str = add_to_str(str, "(", i + 1);
-				a = find_next_nan(str, i + 1);
+
+				str = add_to_str(str, "(", i + 1);      
+        a = find_next_number(str, i + 1);
+				//a = find_next_nan(str, a);
 				i++;
-				str = add_to_str(str, ")", find_next_nan(str, i + 2));
+				str = add_to_str(str, ")", find_next_nan(str, a));
 			}
 			else
 			{
