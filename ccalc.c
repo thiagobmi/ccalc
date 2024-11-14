@@ -263,8 +263,7 @@ char *treat_edge_case(char *str)
 			{
 
 				str = add_to_str(str, "(", i + 1);      
-        a = find_next_number(str, i + 1);
-				//a = find_next_nan(str, a);
+			        a = find_next_number(str, i + 1);
 				i++;
 				str = add_to_str(str, ")", find_next_nan(str, a));
 			}
@@ -287,7 +286,7 @@ char *add_brackets_inside(char *str)
 		{
 			if (check_signs(str, i, find_bracket(str, i + 1)) == 1)
 			{
-				str = add_brackets(str, i, find_bracket(str, i + 1), 0);
+				str = add_brackets(str, i, find_bracket(str, i + 1), 1);
 				i = 0;
 			}
 			else if (check_signs(str, i, find_bracket(str, i + 1)) == 2)
