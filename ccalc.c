@@ -6,7 +6,7 @@
 #include "./include/mystring.h"
 #include "./include/dict.h"
 
-#define MAXLEN 500
+#define MAXLEN 1000
 
 char *receive_input()
 {
@@ -64,6 +64,21 @@ int find_next_sign(char *str, int index)
 	}
 }
 
+int find_next_number(char *str, int index)
+{
+	int count_open = 0;
+	for (int i = index; i < strlen(str); i++)
+	{
+		if (str[i] == '(')
+			count_open++;
+		else if (str[i] == ')')
+			count_open--;
+		if (count_open < 0)
+			return i;
+		if ((isdigit(str[i])) && count_open == 0)
+			return i;
+	}
+}
 int find_last_sign(char *str, int index)
 {
 	int count_open = 0;
@@ -129,7 +144,8 @@ char *add_all_exp(char *str, int start, int end)
 	{
 		if (str[i] == '^')
 		{
-			int next = find_next_sign_exp(str, i);
+			int a = find_next_number(str,i+1);
+			int next = find_next_sign_exp(str, a);
 			int last = find_last_sign_exp(str, i);
 			str = add_to_str(str, ")", next);
 			i = next;
@@ -182,7 +198,8 @@ char *add_brackets(char *str, int start, int end, int flag)
 		}
 		else if (str[i] == '^')
 		{
-			int next = find_next_sign_exp(str, i);
+			int a = find_next_number(str,i+1);
+			int next = find_next_sign_exp(str, a);
 			int last = find_last_sign_exp(str, i);
 			str = add_to_str(str, ")", next);
 			i = next;
@@ -227,27 +244,12 @@ int check_signs(char *str, int start, int end)
 int is_edge_case(char *str, int start, int end)
 {
 	for (int i = 0; i < strlen(str) - 1; i++)
-		if ((str[i] == '/' || str[i] == '*') && (str[i + 1] == '-' || str[i+1] =='+'))
+		if ((str[i] == '/' || str[i] == '*' || str[i] == '^') && (str[i + 1] == '-' || str[i+1] =='+'))
 			return 1;
 	return 0;
 }
 
 
-int find_next_number(char *str, int index)
-{
-	int count_open = 0;
-	for (int i = index; i < strlen(str); i++)
-	{
-		if (str[i] == '(')
-			count_open++;
-		else if (str[i] == ')')
-			count_open--;
-		if (count_open < 0)
-			return i;
-		if ((isdigit(str[i])) && count_open == 0)
-			return i;
-	}
-}
 
 
 
@@ -257,7 +259,7 @@ char *treat_edge_case(char *str)
 	for (int i = 0; i < strlen(str) - 1; i++)
 	{
 		int a;
-		if ((str[i] == '/' || str[i] == '*' || str[i] == '-') && (str[i + 1] == '-' || str[i + 1] == '+'))
+		if ((str[i] == '/' || str[i] == '*' || str[i] == '-' || str[i]=='^') && (str[i + 1] == '-' || str[i + 1] == '+'))
 		{
 			if (str[i + 2] != '(')
 			{
@@ -554,10 +556,10 @@ char *parse_expression(char *mystr)
 {
 
 	shelf_t *s = new_shelf(1);
+	mystr = add_all_exp(mystr, 0, strlen(mystr));
 	mystr = treat_edge_case(mystr);
 	mystr = add_brackets(mystr, 0, strlen(mystr), 1);
 	mystr = add_brackets_inside(mystr);
-	mystr = add_all_exp(mystr, 0, strlen(mystr));
 
 	printf("\n%s\n", mystr);
 
@@ -678,6 +680,8 @@ int validate_expression(char *str)
 	if (is_in_string(str, "(*"))
 		return 1;
 
+	if (is_in_string(str, "/*"))
+		return 1;
 	if (is_in_string(str, "(/"))
 		return 1;
 
@@ -691,6 +695,9 @@ int validate_expression(char *str)
 		return 1;
 
 	if (is_in_string(str, "+^"))
+		return 1;
+
+	if (is_in_string(str, ")("))
 		return 1;
 
 	else
