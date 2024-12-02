@@ -641,8 +641,8 @@ char *parse_expression(char *mystr)
 {
 
 	shelf_t *s = new_shelf(1);
-	mystr = treat_edge_case(mystr);
 	mystr = add_brackets(mystr, 0, strlen(mystr), 1);
+	mystr = treat_edge_case(mystr);
 	mystr = add_all_exp(mystr, 0, strlen(mystr));
 	mystr = add_brackets_inside(mystr);
 
