@@ -29,6 +29,19 @@ int find_bracket(char *str, int index)
 	}
 }
 
+int find_bracket_exp(char *str, int index)
+{
+	int count_open = 0;
+	for (int i = index; i < strlen(str); i++)
+	{
+		if (str[i] == '(')
+			count_open++;
+		else if (str[i] == ')')
+			count_open--;
+		if (count_open == 0)
+			return i + 1;
+	}
+}
 int bracket_type(char *str, int start, int end)
 {
 	int count_open = -1;
@@ -97,6 +110,22 @@ int find_last_sign(char *str, int index)
 	}
 }
 
+int find_next_exp(char *str, int index){
+
+	int count_open = 0;
+	for (int i = index; i < strlen(str); i++)
+	{
+		if (str[i] == '(')
+			count_open++;
+		else if (str[i] == ')')
+			count_open--;
+		if (count_open < 0)
+			return i;
+		if ((str[i] == '^') && count_open == 0)
+			return i;
+	}
+}
+
 int find_next_sign_exp(char *str, int index)
 {
 
@@ -137,23 +166,37 @@ int find_last_sign_exp(char *str, int index)
 	}
 }
 
+
+
+
 char *add_all_exp(char *str, int start, int end)
 {
-
+	
 	for (int i = start; i < end; i++)
 	{
 		if (str[i] == '^')
 		{
-			int a = find_next_number(str,i+1);
-			int next = find_next_sign_exp(str, a);
+			
 			int last = find_last_sign_exp(str, i);
+			str = add_to_str(str, "(", last + 1);
+			i++;
+			int next;
+			if(str[i+1] != '('){
+				int a = find_next_number(str,i+1);
+				next = find_next_sign_exp(str, a);
+			}
+			else{
+				next = find_bracket_exp(str,i+1);
+			}
+
 			str = add_to_str(str, ")", next);
 			i = next;
 			end = strlen(str);
-			str = add_to_str(str, "(", last + 1);
 		}
 	}
+	
 	return str;
+
 }
 
 void print_result(char*str){
@@ -233,11 +276,14 @@ int check_signs(char *str, int start, int end)
 		else if (str[i] == '^' && count_open == 0)
 			is_exponential++;
 	}
-	if ((is_times && is_plus) || (is_exponential && is_plus))
+	if ((is_times && is_plus))
 		return 1;
 	else if (is_times && is_exponential)
 		return 2;
-
+	else if(is_exponential && is_plus)
+		return 3;
+	else if (is_exponential > 1)
+		return 4;
 	return 0;
 }
 
@@ -248,9 +294,6 @@ int is_edge_case(char *str, int start, int end)
 			return 1;
 	return 0;
 }
-
-
-
 
 
 char *treat_edge_case(char *str)
@@ -280,21 +323,63 @@ char *treat_edge_case(char *str)
 	return str;
 }
 
+
+char *treat_exp(char*str,int start, int end){
+
+	int count_open = 0;
+	for(int j = start;j<end;j++){
+
+		if(str[j] == '(')
+			count_open++;
+		else if (str[j]==')')
+			count_open--;
+		if(str[j] == '^' && count_open ==1){
+			str = add_to_str(str,"(", j+1);
+			j++;
+			int a = find_next_number(str,j);
+			int next = find_next_exp(str,a);
+			str = add_to_str(str,")",next);
+			break;
+		}
+	}
+	
+	return str;		
+
+}
+
 char *add_brackets_inside(char *str)
 {
 	for (int i = 0; i < strlen(str); i++)
 	{
 		if (str[i] == '(')
 		{
+			if(check_signs(str,i,find_bracket(str,i+1)) == 4){
+				str = treat_exp(str,i,find_bracket(str,i+1));
+				i = 0;
+			}
+
 			if (check_signs(str, i, find_bracket(str, i + 1)) == 1)
 			{
 				str = add_brackets(str, i, find_bracket(str, i + 1), 1);
 				i = 0;
 			}
-			else if (check_signs(str, i, find_bracket(str, i + 1)) == 2)
-			{
-				str = add_all_exp(str, i, find_bracket(str, i + 1));
-				i = 0;
+			if(check_signs(str,i,find_bracket(str,i+1))==2){
+				str = add_all_exp(str,i,find_bracket(str,i+1));
+				i=0;
+			}			
+
+			if(check_signs(str,i,find_bracket(str,i+1))==3){
+				for(int j = i;j < strlen(str);j++){
+					if(str[j] == '^'){
+						int last = find_last_sign(str,j);
+						str = add_to_str(str,"(", last+1);
+						j++;
+						int next = find_next_sign(str,j);
+						str = add_to_str(str,")",next);
+						i=0;
+						break;
+					}
+				}
 			}
 		}
 	}
@@ -556,9 +641,9 @@ char *parse_expression(char *mystr)
 {
 
 	shelf_t *s = new_shelf(1);
-	mystr = add_all_exp(mystr, 0, strlen(mystr));
 	mystr = treat_edge_case(mystr);
 	mystr = add_brackets(mystr, 0, strlen(mystr), 1);
+	mystr = add_all_exp(mystr, 0, strlen(mystr));
 	mystr = add_brackets_inside(mystr);
 
 	printf("\n%s\n", mystr);
@@ -611,9 +696,6 @@ int valid_brackets(char *str)
 		return 0;
 	return 1;
 }
-
-
-
 
 
 int validate_expression(char *str)
